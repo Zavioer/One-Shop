@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td><a href="{{ category.get_update_url }}">Update</a></td>
+            <td><a href="{{ category.get_delete_url }}">Delete</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+<hr />
+
+<a href="{% url 'product:add-category' %}">Add new category</a>

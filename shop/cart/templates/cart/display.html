@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>PRODUCT</th>
+                            <th>NAME</th>
+                            <th class="text-center">PRICE</th>
+                            <th class="text-center">QUANTITY</th>
+                            <th class="text-center">CATEGORY</th>
+                            <th class="text-center"><i class="bi bi-trash"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cart_item in cart_items %}
+                            <tr>
+                                <td>
+                                    <img src="http://dummyimage.com/70x50" alt="product-img">
+                                </td>
+                                <td>
+                                    <p class="fs-5 fw-bolder">{{ cart_item.product.name }}</p>
+                                </td>
+                                <td>
+                                    <p>{{ cart_item.product.price }}</p>
+                                </td>
+                                <td>
+                                    <p>{{ cart_item.amount }}</p>
+                                </td>
+                                <td>
+                                    <p>{{ cart_item.product.category }}</p>
+                                </td>
+                                <td class="text-center">
+                                    <a class="link-dark" href="{{ cart_item.get_delete_url }}"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-md-5 col-12">
+        </div>
+        <div class="col-lg-4 col-md-7 col-12">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex flex-row justify-content-between border-0">
+                    Cart Subtotal <span class="d-inline">{{ total_price }} {{ currency }}</span>
+                </li>
+                <li  class="list-group-item d-flex flex-row justify-content-between">
+                    Shipping <span>{{ shipping }} {{ currency }}</span>
+                </li>
+                <li class="list-group-item d-flex flex-row justify-content-between border-0">
+                    You Pay <span>{{ total_price_with_shipping }} {{ currency }}</span>
+                </li>
+            </ul>
+            <div class="d-flex flex-column">
+                <a href="{% url 'cart:payment' cart.id %}" class="btn btn-primary">CHECKOUT</a>
+                <a href="#" class="btn btn-primary mt-2">CONTINUE SHOPPING</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

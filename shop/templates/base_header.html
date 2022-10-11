@@ -1,0 +1,67 @@
+<style>
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    ul li:nth-child(1)::after {
+        content: "|";
+        margin-left: 10px;
+    }
+
+    .header_second ul {
+        float: right;
+    }
+
+    .header_second ul li:nth-child(1)::after {
+        content: "|";
+        margin-left: 10px;
+    }
+
+    .header_second ul li:nth-child(2)::after {
+        content: "|";
+        margin-left: 10px;
+    }
+
+    .header_second ul li:nth-child(1) i {
+        padding: 0 10px;
+    }
+
+</style>
+<div class="col">
+    <ul>
+        <li>
+            <i class="bi bi-envelope"></i>
+            no-reply@shop.com
+        </li>
+        <li>
+            Free Shippinh for all Order of 120 ZŁ
+        </li>
+    </ul>
+</div>
+<div class="col header_second">
+    <ul>
+        <li>
+            <i class="bi bi-meta"></i>
+            <i class="bi bi-twitter"></i>
+            <i class="bi bi-linkedin"></i>
+        </li>
+        <li>
+            <i class="bi bi-chevron-double-right"></i>
+            Polish
+        </li>
+        <li>
+            <i class="bi bi-person-fill"></i>
+            {% if user.is_authenticated %}
+                <a href="{% url 'account:logout' %}">Log out</a>
+            {% else %}
+                <a href="{% url 'account:login' %}">Login</a>
+            {% endif %}
+        </li>
+    </ul>
+</div>

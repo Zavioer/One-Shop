@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 d-flex flex-column align-items-center">
+            <h3>Welcome to OneShop 🛒</h3>
+            <form class="row g-3" method="POST" action="">
+                {% csrf_token %}
+                <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-12">
+                    <label for="inputPassword4" class="form-label">Password</label>
+                    {{ form.password }}
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+              </form>
+        </div> 
+    </div>
+    <div class="row mt-2">
+        <div class="col-12 d-flex flex-column align-items-center">
+            <a href="{% url 'account:login-auth'%}">Login by Google</a>
+            <a href="{% url 'account:register'%}">Do not have an account? Register here!</a>
+        </div> 
+    </div>
+</div>
+{% endblock %}

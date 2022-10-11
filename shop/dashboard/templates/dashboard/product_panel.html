@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.category_id }}</td>
+            <td><a href="{{ product.get_update_url }}">Update</a></td>
+            <td><a href="{{ product.get_delete_url }}">Delete</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+<hr />
+
+<a href="{% url 'product:add' %}">Add new product</a>

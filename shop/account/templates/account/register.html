@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 d-flex flex-column align-items-center">
+            <h3>Join our community 🛒</h3>
+            <form class="row g-3" method="POST" action="">
+                {% csrf_token %}
+                <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-12">
+                    <label for="inputPassword1" class="form-label">Password</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="col-12">
+                    <label for="inputPassword2" class="form-label">Confirm password</label>
+                    {{ form.password2 }}
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+              </form>
+        </div> 
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% include 'nav.html' %}
+<h3>Dashboard main panel</h3>
+
+<!-- <nav>
+    <a href=""></a>
+</nav> -->
+
+<table class="most_sold_product">
+    <tr>
+        <th>Product ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Total sold</th>
+    </tr>
+    {% for product in objects %}
+        <tr>
+            <td>{{ product.id}}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.amount }}</td>
+            <td>{{ product.total}}</td>
+        </tr>
+    {% endfor%}
+</table>
+
+{% autoescape off %}
+{{ chart}}
+{% endautoescape %}

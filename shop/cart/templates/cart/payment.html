@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <!-----------------------------
+  
+    Górna część strony
+  
+  ------------------------------------->
+
+    <!---  copy  start--->
+    <style>
+        div.dotpay_form_donation {
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+
+        div.dp_temat {
+            font-size: 1.5em;
+            font-style: inherit;
+            font-weight: bold;
+            color: #334242;
+        }
+
+        input#dp_def_amount {
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            height: 50px;
+            font-size: 1.3em;
+            background: #dae6ff;
+            text-align: center;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        input#dp_kwota {
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            font-size: 1.2em;
+            background: #f8f6fb;
+            text-align: center;
+
+        }
+
+        input#dp_other_amount {
+            font-size: 1em;
+            background: #daedff;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        button#dp_buttomDarowizna {
+            font-size: 1.3em;
+            background: #ae3131;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+            color: #f3f0ed;
+            letter-spacing: 0.1em;
+        }
+
+        table.tbl_center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+    <!-- poniżej wpisz prawdiłową ścieżkę do jquery -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#dp_buttomDarowizna").click(function () {
+                if ($('#dp_kwota').val().trim() === '') {
+                    $("#dp_kwota_alert").text("Proszę wybrać lub wprowadzić kwotę darowizny.").show();
+                    $('#dp_kwota_alert').css("display", "inline").fadeOut(5000);
+                    return false;
+                }
+            });
+        });
+    </script>
+
+    <div class="dotpay_form_donation">
+        <form action="https://ssl.dotpay.pl/test_payment/" method="post" target="_parent">
+            <div class="dp_temat">Wybierz kwotę darowizny</div>
+            <p>
+                <input type="button" id="dp_def_amount"
+                    onClick="$('#dp_kwota').val('10'); $('#dp_kwota').prop('readonly', true);$('#dp_kwota').attr('style','color:blue');$('#dp_other_amount_txt').html('Wybrana Kwota')"
+                    value="10.00 zł" />
+                <input type="button" id="dp_def_amount"
+                    onClick="$('#dp_kwota').val('20'); $('#dp_kwota').prop('readonly', true);$('#dp_kwota').attr('style','color:blue');$('#dp_other_amount_txt').html('Wybrana Kwota')"
+                    value="20.00 zł" />
+                <input type="button" id="dp_def_amount"
+                    onClick="$('#dp_kwota').val('50'); $('#dp_kwota').prop('readonly', true);$('#dp_kwota').attr('style','color:blue');$('#dp_other_amount_txt').html('Wybrana Kwota')"
+                    value="50.00 zł" />
+                <input type="hidden" name="type" value="0" />
+                <input type="hidden" name="currency" value="PLN" />
+
+                <table class="tbl_center">
+                    <tr>
+                        <td>
+                            <br><input type="button" id="dp_other_amount"
+                                onClick="$('#dp_kwota').prop('readonly', false);$('#dp_kwota').attr('style','color:brown');$('#dp_other_amount_txt').html('<span style=\'color:brown\'>Wprowadź kwotę</span>')"
+                                value="Inna kwota" />
+                        </td>
+                        <td>
+                            <br><span id="dp_other_amount_txt">Wybrana Kwota</span>:
+                            <input type="text" name="amount" id="dp_kwota" readonly
+                                pattern="^([1-9])((\.\d{1,2})?)$|^((?!0)(\d){1,5})((\.\d{1,2})?)$|^(1(\d{5})(.\d{1,2})?)$|^(200000(.[0]{1,2})?)$"
+                                placeholder="np. 100" maxlength="9" size="9"
+                                title="Kwota powinna zawierać się w przedziale 1 - 200000 PLN. Dozwolony format to np: 100 lub 152.43"
+                                oninput="this.value = this.value.replace(/[^0-9\.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" />
+                            PLN
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+
+                <!--------------------------------- KONFIGURACJA --------------------------------------->
+
+                <!---- zamiast 000000 nalezy podstawic numer ID w Dotpay -->
+                <input type="hidden" name="id" value="742805" />
+                <!--- Tytuł transakcji --->
+                <input type="hidden" name="description" value="Testowa płatność" />
+                <!--- Ardes URL powrotu --->
+                <input type="hidden" name="url" value="http://www.example.com" />
+                <!-- Tekst przycisku powrotu do sklepu --->
+                <input type="hidden" name="buttontext" id="buttontext" value="Powrót do sprzedawcy" />
+            </p>
+
+            <!--------------------------------- KONIEC KONFIGURACJI --------------------------------------->
+
+            <p><br><button class="dp_buttomDarowizna" id="dp_buttomDarowizna">Wpłać darowiznę</button></p>
+        </form>
+        <div id="dp_kwota_alert" style="color:red;"></div>
+    </div>
+
+    <!---  copy  end--->
+
+    <!-----------------------------
+  
+    Dolna część strony
+  
+  ------------------------------------->
+
+<b>{{ res }}</b>
+
+</body>
+
+</html>

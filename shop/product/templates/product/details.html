@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .comment_block {
+        width: 100%;
+        border: 1px dashed black;
+    }
+
+    .comment_body {
+        width: 85%;
+        float: left;
+    }
+
+    .comment_rate {
+        width: 15%;
+        float: left;
+    }
+
+    .comment_rate a {
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: bolder;
+    }
+</style>
+
+
+
+<h3>{{ product.name }}</h3>
+
+<p>{{ product.price }}</p>
+<p>{{ product.description }}</p>
+<p>{{ product.category }}</p>
+
+<hr>
+<h4>Comments section</h4>
+{% for user_comment in comments %}
+    <div class="comment_block">
+        <div class="comment_body"> 
+            <input id="comment_id" type="hidden" value="{{ user_comment.id }}">
+            <b>{{ user_comment.id }}</b>
+            <p>{{ user_comment.body }}</p>
+        </div>
+        <div class="comment_rate">
+            <p>votes plus: {{ user_comment.vote_plus }}<button class="rate_btn" type="button" value="1">+</button></p>
+            <p>votes minus: {{ user_comment.vote_minus }}<button class="rate_btn" type="button" value="0">-</button></p>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+{% endfor %}
+
+<hr>
+
+
+{% if can_comment %}
+<form method="POST" action="" id="comment-add-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add comment</button>
+</form>
+{% else %}
+<p>Already commented this product :)</p>
+{% endif %}
+
+
+<script>
+    // Add comment rate
+    // get one of many buttons for plus or minus
+    document.querySelectorAll('.rate_btn').forEach(item => {
+        item.addEventListener('click', addCommentRate);
+    });
+
+    function addCommentRate(e) {
+        let req = new XMLHttpRequest();
+
+        req.onreadystatechange = () => {
+
+        }
+
+        req.open('POST', "{% url 'product:add-comment-rate' product.id %}", true);
+        req.send(this.value)
+    }
+
+    /* Add comment */
+    let commentForm = document.getElementById('comment-add-form');
+    commentForm.addEventListener('submit', (e) => {
+        console.log(commentForm.method);
+        
+
+        let req = new XMLHttpRequest();
+
+        req.onreadystatechange = () => {
+            if (req.readyState === XMLHttpRequest.DONE) {
+                if (req.status === 200) {
+                    console.log('Correct status!');
+                    commentForm.replaceChild = '<p>You already commented!</p>'
+                } else {
+                    console.log(`Invalid status, code: {req.status}`);
+                }
+            } else {
+                console.log('Request not ready yey.');
+            }
+        }
+
+        if (commentForm.method.toUpperCase() === 'POST') {
+            req.open('POST', "{% url 'product:add-comment' product.id %}", true);
+            req.send(new FormData(commentForm));
+        }
+    })
+</script>
+{% endblock content %}
